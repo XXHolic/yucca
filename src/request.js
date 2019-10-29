@@ -13,15 +13,15 @@ class Request {
     if (headers) {
       axiosConfig = {...axiosConfig, ...headers };
     }
-
+    // debugger;
     this.axiosConfig = {...axiosConfig};
     this.options = {...options};
     this.url = url;
     this.axiosInstance = axios.create();
     // 返回数据的处理，不能多次注册，多次注册会多次触发
     this.axiosInstance.interceptors.response.use(function (config) {
-      //
-      return config;
+      // console.info('config',config);
+      return config.data;
     }, function (error) {
       //
       return Promise.reject(error);
@@ -31,7 +31,7 @@ class Request {
   get(data) {
     const { axiosInstance,url,axiosConfig } = this;
 
-    let paramStr = '', reqUrl = '';
+    let paramStr = '', reqUrl = url;
     Object.keys(data).forEach((key) => {
       paramStr += `${key}=${data[key]}&`;
     });
@@ -40,7 +40,7 @@ class Request {
       reqUrl = `${url}?${paramStr}`;
     }
 
-    axiosInstance.get(reqUrl,axiosConfig).then((data) => {
+    return axiosInstance.get(reqUrl,axiosConfig).then((data) => {
       if (data) {
         return Promise.resolve(data);
       }
@@ -62,7 +62,7 @@ class Request {
       bodyData = JSON.stringify(data);
     }
 
-    axiosInstance.post(url, bodyData, axiosConfig).then((data) => {
+    return axiosInstance.post(url, bodyData, axiosConfig).then((data) => {
       if (data) {
         return Promise.resolve(data);
       }
@@ -70,21 +70,29 @@ class Request {
   }
 }
 
-const createRequest = (options, data) => {
+const createRequest = (options={}, data={}) => {
   const { type } = options;
   const request = new Request(options);
   const reqType = String(type).toLowerCase();
   switch (reqType) {
     case 'get':
-      {
-        request.get(data);
-      }
-      break;
+      return new Promise ((resolve) => {
+        request.get(data).then((backData) => {
+          // console.info('inner data',backData);
+          if (backData) {
+            resolve(backData);
+          }
+        });
+      });
     case 'post':
-      {
-        request.post(data);
-      }
-      break;
+      return new Promise ((resolve) => {
+        request.post(data).then((backData) => {
+          // console.info('inner data',backData);
+          if (backData) {
+            resolve(backData);
+          }
+        });
+      });
   }
   return ;
 }
