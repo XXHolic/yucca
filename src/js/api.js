@@ -1,24 +1,16 @@
+// - 所有音频节目：/api/program
+// - 所有的作者：/api/author
+// - 获取单个节目所有内容：/api/program/detail
+// - 当前播放列表：/api/current
+// - 添加到播放列表：/api/current/add
+// - 获取单个音频文件：/api/audio
 const api = {
-  sheet: "/api/sheet",
-  sheetAdd: "/api/sheet/add",
-  sheetEdit: "/api/sheet/edit",
-  sheetDel: "/api/sheet/del",
-  sheetSort: "/api/sheet/sort",
-  sheetDetail: "/api/sheet/detail",
-  sheetDetailSort: "/api/sheet/detail/sort",
-  sheetDetailDel: "/api/sheet/detail/del",
-  sheetDetailMove: "/api/sheet/detail/move",
-  singer: "/api/singer",
-  singerMusic: "/api/singer/music",
-  collect: "/api/collect",
-  music: "/api/music",
-  musicCollect: "/api/music/collect",
-  song: "/api/song",
+  program: "/api/program",
+  author: "/api/author",
+  programDetail: "/api/program/detail",
+  audio: "/api/audio",
   current: "/api/current",
   currentAdd: "/api/current/add",
-  currentSort: "/api/current/sort",
-  currentDel: "/api/current/del",
-  currentMove: "/api/current/move",
 };
 
-export {api}
+export { api };

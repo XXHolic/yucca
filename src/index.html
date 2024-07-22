@@ -56,32 +56,38 @@
       </div>
 
     </div>
-    <div class="lap-footer">
+    <div class="lap-footer" id="playerContainer">
       <div class="lap-player">
-        <div class="lap-touch-color"><i class="fa-solid fa-list fa-xl" style="color: #fff;"></i></div>
-        <div class="lap-player-txt"></div>
-        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" style="color: #fff;"></i></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-list fa-xl" data-type="list" style="color: #fff;"></i></div>
+        <div class="lap-player-txt" id="playerMsg"></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" data-type="time" style="color: #fff;"></i></div>
       </div>
       <div class="lap-player">
-        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" style="color: #fff;"></i></div>
-        <div><audio controls></audio></div>
-        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" style="color: #fff;"></i></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" data-type="pre" style="color: #fff;"></i></div>
+        <div><audio controls id="audioPlayer"></audio></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" data-type="next" style="color: #fff;"></i></div>
       </div>
     </div>
     <!-- 播放列表弹窗 -->
     <div class="lap-popup lap-popup-list lap-dn"></div>
     <!-- 时间设定弹窗 -->
-    <div class="lap-popup">
+    <div class="lap-popup lap-dn" id="lapPopTime">
       <div class="lap-popup-time">
         <div class="lap-time-title">定时设置</div>
-        <div class="lap-time-opt">顺序播放</div>
-        <div class="lap-time-opt">播放当前</div>
-        <div class="lap-time-opt">播放两集</div>
-        <div class="lap-time-opt">播放三集</div>
-        <div class="lap-time-opt">播放四集</div>
-        <div class="lap-time-cancel">取消</div>
+        <div class="lap-time-opt active" data-type="time" data-id="0">顺序播放</div>
+        <div class="lap-time-opt" data-type="time" data-id="1">播放当前</div>
+        <div class="lap-time-opt" data-type="time" data-id="2">播放两集</div>
+        <div class="lap-time-opt" data-type="time" data-id="3">播放三集</div>
+        <div class="lap-time-opt" data-type="time" data-id="4">播放四集</div>
+        <div class="lap-time-cancel" data-type="cancel">取消</div>
       </div>
     </div>
+    <div class="lap-spin lap-dn" id="lapSpin">
+      <div class="lap-flex-center" style="height: 100%;color: #fff;">
+        <i class="fa-solid fa-spinner fa-spin fa-2xl"></i>
+      </div>
+    </div>
+    <div class="lap-info lap-dn" id="lapInfo"></div>
   </div>
     <script type="module">
       import { init } from './js/index.js'

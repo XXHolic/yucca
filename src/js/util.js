@@ -1,17 +1,17 @@
 const spin = {
   show: () => {
-    const ele = document.querySelector("#lmpSpin");
-    ele.style.display = 'block'
+    const ele = document.querySelector("#lapSpin");
+    ele.style.display = "block";
   },
   hide: () => {
-    const ele = document.querySelector("#lmpSpin");
+    const ele = document.querySelector("#lapSpin");
     ele.style.display = "none";
-  }
-}
+  },
+};
 
 const info = {
   show: (str, time = 2000) => {
-    const ele = document.querySelector("#lmpInfo");
+    const ele = document.querySelector("#lapInfo");
     ele.style.display = "block";
     ele.innerHTML = str ? str : "操作成功";
     setTimeout(() => {
@@ -19,16 +19,16 @@ const info = {
     }, time);
   },
   err: (str, time = 2000) => {
-    const ele = document.querySelector("#lmpInfo");
+    const ele = document.querySelector("#lapInfo");
     ele.style.display = "block";
     ele.innerHTML = `<div style="color:red">${str}</div>`;
     setTimeout(() => {
-      ele.innerHTML='';
+      ele.innerHTML = "";
       ele.style.display = "none";
     }, time);
   },
   hide: () => {
-    const ele = document.querySelector("#lmpInfo");
+    const ele = document.querySelector("#lapInfo");
     ele.innerHTML = "";
     ele.style.display = "none";
   },
@@ -66,12 +66,12 @@ const showTrigger = {
 
 // 避免重复绑定事件
 const addEventOnce = (ele, eventName, handler) => {
-    if (ele.clickHandler) {
-      ele.removeEventListener(eventName, ele.clickHandler);
-    }
-    ele.clickHandler = handler;
-    ele.addEventListener(eventName, ele.clickHandler);
-}
+  if (ele.clickHandler) {
+    ele.removeEventListener(eventName, ele.clickHandler);
+  }
+  ele.clickHandler = handler;
+  ele.addEventListener(eventName, ele.clickHandler);
+};
 
 const formatSeconds = (times) => {
   let t = "";
@@ -108,4 +108,24 @@ const getSongMsg = (ele) => {
   return { songId, songName, singerId, singerName };
 };
 
-export { spin, info, showTrigger, addEventOnce, formatSeconds, getSongMsg };
+const storage = {
+  set: (name, value) => {
+    window.localStorage.setItem(name, value);
+  },
+  get: (name) => {
+    return window.localStorage.getItem(name);
+  },
+  remove: (name) => {
+    window.localStorage.removeItem(name);
+  },
+};
+
+export {
+  spin,
+  info,
+  showTrigger,
+  storage,
+  addEventOnce,
+  formatSeconds,
+  getSongMsg,
+};
