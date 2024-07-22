@@ -8,8 +8,8 @@ lerna-debug.log*
 .pnpm-debug.log*
 *.zip
 *.mp3
+local/
 localdata/
-localdatajson/
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

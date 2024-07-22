@@ -1,0 +1,130 @@
+.lap-dn {
+  display: none;
+}
+
+.lap-touch-color:active {
+  opacity: 0.6;
+}
+
+.lap-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.lap-body {
+  overflow: auto;
+  flex: 1;
+}
+
+.lap-footer {
+  height: 120px;
+  background-color: #242424;
+}
+
+.lap-player {
+  height: 60px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.lap-player-txt {
+  width: 300px;
+}
+
+.lap-list-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  font-size: 20px;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.lap-program-list {
+  padding-top: 54px;
+}
+
+.lmp-list-odd {
+  background-color: #e4e4e4;
+}
+
+.lap-program-filter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #e4e4e4;
+  padding: 10px 10px 10px 40px;
+  background-color: #fff;
+}
+
+.lap-list-status {
+  width: 20px;
+}
+
+.lap-list-poster {
+  height: 70px;
+}
+
+.lap-detail-img {
+  width: 100%;
+}
+
+
+.lap-detail-msg {
+  padding: 10px;
+  text-align: center;
+}
+
+.lap-row-chapter {
+  padding: 0 10px;
+}
+
+.lap-row-section {
+  padding: 5px 10px 5px 30px;
+}
+
+.lap-row-section:active {
+  background-color: #e4e4e4;
+}
+
+.lap-detail-back {
+  position: fixed;
+  right: 10px;
+  bottom: 160px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #e4e4e4;
+  border-radius: 20px;
+}
+
+.lap-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.lap-popup-time {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background-color: #fff;
+}
+
+.lap-time-opt {
+  padding: 10px;
+  text-align: center;
+}

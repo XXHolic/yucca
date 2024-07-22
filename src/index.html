@@ -1,12 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>本地音频节目</title>
+  <link rel="shortcut icon" href="./asset/favicon.ico" />
+  <link rel="stylesheet" href="./asset/css/fontawesome.css" />
+  <link rel="stylesheet" href="./asset/css/solid.css" />
+  <link rel="stylesheet" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/index.css" />
 </head>
 <body>
+  <div class="lap-container">
+    <div class="lap-body">
+      <!-- 所有节目列表 -->
+      <div class="lap-program-list">
+        <div class="lap-program-filter">
+          <label>作者：<select id="allWriter"><option value="0">全部</option><option value="1">1</option></select></label>
+        </div>
+        <div class="lap-list-row">
+          <div class="lap-list-status"><i class="fa-solid fa-ear-listen fa-beat"></i></div>
+          <div><img class="lap-list-poster" src="./asset/list-default.png"></div>
+          <div>
+            <div>节目名称节目名称节目名称节</div>
+            <div>节目作者</div>
+          </div>
+        </div>
+        <div class="lap-list-row">
+          <div class="lap-list-status"></div>
+          <div><img class="lap-list-poster" src="./asset/list-default.png"></div>
+          <div>
+            <div>节目名称节目名称节目</div>
+            <div>节目作者</div>
+          </div>
+        </div>
+      </div>
+      <!-- 节目详情 -->
+      <div class="lap-program-detail lap-dn">
+        <div>
+          <img class="lap-detail-img" src="./asset/detail-default.jpg">
+        </div>
+        <div class="lap-detail-msg">
+          <div>节目名称节目名称节目</div>
+          <div>节目作者</div>
+        </div>
+        <div class="lap-detail-list">
+          <div class="lap-detail-row">
+            <div class="lap-row-chapter">第一章</div>
+            <div class="lap-row-section">1帝国的转身</div>
+            <div class="lap-row-section">2新的王朝</div>
+          </div>
+        </div>
+        <div class="lap-detail-back"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+      </div>
 
+    </div>
+    <div class="lap-footer">
+      <div class="lap-player">
+        <div class="lap-touch-color"><i class="fa-solid fa-list fa-xl" style="color: #fff;"></i></div>
+        <div class="lap-player-txt"></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" style="color: #fff;"></i></div>
+      </div>
+      <div class="lap-player">
+        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" style="color: #fff;"></i></div>
+        <div><audio controls></audio></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" style="color: #fff;"></i></div>
+      </div>
+    </div>
+    <!-- 播放列表弹窗 -->
+    <div class="lap-popup lap-popup-list lap-dn"></div>
+    <!-- 时间设定弹窗 -->
+    <div class="lap-popup">
+      <div class="lap-popup-time">
+        <div class="lap-time-title">定时设置</div>
+        <div class="lap-time-opt">顺序播放</div>
+        <div class="lap-time-opt">播放当前</div>
+        <div class="lap-time-opt">播放两集</div>
+        <div class="lap-time-opt">播放三集</div>
+        <div class="lap-time-opt">播放四集</div>
+        <div class="lap-time-cancel">取消</div>
+      </div>
+    </div>
+  </div>
+    <script type="module">
+      import { init } from './js/index.js'
+      window.onload = () => {
+        init();
+      }
+    </script>
 </body>
 </html>

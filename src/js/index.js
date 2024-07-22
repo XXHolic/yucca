@@ -1,0 +1,2 @@
+const init = () => {};
+export { init };
