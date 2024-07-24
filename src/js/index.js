@@ -1,12 +1,16 @@
 import axios from "../asset/js/axios.min.js";
 import { api } from "./api.js";
-import { spin } from "./util.js";
+import { spin, addEventOnce, showTrigger } from "./util.js";
 import { audioEvent } from "./player.js";
 
 let originData = [] // 用来本地筛选
 
+const audioEle = document.querySelector("#audioPlayer");
 const listObj = document.querySelector("#lapListBody");
 const allWriter = document.querySelector("#allWriter");
+const lapProgram = document.querySelector("#lapProgram");
+const lapProgramDetail = document.querySelector("#lapProgramDetail");
+const lapDetailList = document.querySelector("#lapDetailList");
 
 const formatList = (data) => {
   const listStr = data.reduce((acc, cur, index) => {
@@ -23,8 +27,78 @@ const formatList = (data) => {
         </div>`;
     return acc;
   }, '')
-
   listObj.innerHTML = listStr;
+}
+
+const detailEvent = () => {
+  const lapDetailBack = document.querySelector('#lapDetailBack')
+  addEventOnce(lapDetailBack, "click", (e) => {
+    showTrigger.show(lapProgram, lapProgramDetail)
+  })
+
+  addEventOnce(lapDetailList, "click", (e) => {
+    const target = e.target;
+    const type = audioEle.getAttribute('data-type');
+    const currentPlay = audioEle.getAttribute('data-mark');
+    target.setAttribute('class', 'lap-row-section red')
+  })
+}
+
+const getDetail = async (params) => {
+  spin.show()
+  try {
+    const { status, data } = await axios.post(api.programDetail, params);
+    if (status == 200) {
+      const { id, title, author, poster, date, list } = data
+      const lapDetailPoster = document.querySelector("#lapDetailPoster");
+      const lapDetailTitle = document.querySelector("#lapDetailTitle");
+      const lapDetailAuthor = document.querySelector("#lapDetailAuthor");
+      const lapDetailDate = document.querySelector("#lapDetailDate");
+      lapDetailPoster.src = `./localdata/${id}/${poster}`;
+      lapDetailTitle.innerHTML = title;
+      lapDetailAuthor.innerHTML = author;
+      lapDetailDate.innerHTML = `${date}首次发表`;
+      const currentPlay = audioEle.getAttribute('data-mark');
+      const listStr = list.reduce((acc, cur) => {
+        const { title, child } = cur;
+        let childStr = ''
+        if (child) {
+          childStr = child.reduce((accChild, curChild) => {
+            const { fileName } = curChild
+            const mark = `id/${fileName}`
+            const cls = currentPlay === mark ? 'lap-row-section red' : 'lap-row-section'
+            accChild += `<div class="${cls}" data-mark=${mark} data-type="play">${curChild.title}</div>`;
+            return accChild
+          }, '')
+
+        }
+        acc += `<div class="lap-detail-row">
+            <div class="lap-row-chapter">${title}</div>
+            ${childStr}
+          </div>`;
+        return acc;
+      }, '')
+      lapDetailList.innerHTML = listStr;
+      detailEvent()
+    }
+  } catch (error) {
+
+  } finally {
+    spin.hide()
+  }
+
+}
+
+const listEvent = () => {
+  const newNodeList = lapListBody.querySelectorAll(".lap-list-row");
+  for (let i = 0; i < newNodeList.length; i++) {
+    const listenEle = newNodeList[i]
+    const id = listenEle.getAttribute('data-id')
+    addEventOnce(listenEle, "click", (e) => {
+      showTrigger.show(lapProgramDetail, lapProgram)
+      getDetail({ id })
+    })
+  }
 }
 
 const eventInit = () => {
@@ -33,17 +107,14 @@ const eventInit = () => {
     const text = allWriter.options[index].text;
     const validData = originData.filter(ele => ele.author == text)
     formatList(validData)
+    setTimeout(() => {
+      listEvent()
+    }, 1000)
   });
-  const newNodeList = lapListBody.querySelectorAll(".lap-list-row");
-  for (let i = 0; i < newNodeList.length; i++) {
-    const listenEle = newNodeList[i]
-    listenEle.addEventListener("click", (e) => {
-      const target = e.target;
-      const id = target.getAttribute('data-id')
-      console.log('id', id)
-    });
-  }
 
+  setTimeout(() => {
+    listEvent()
+  }, 1000)
 };
 
 const getAuthors = async () => {
@@ -60,13 +131,13 @@ const getPrograms = async () => {
   if (status == 200) {
     originData = data;
     formatList(data)
+    eventInit()
   }
 };
 
 const init = () => {
   getPrograms()
   getAuthors()
-  eventInit()
   audioEvent();
 };
 export { init };

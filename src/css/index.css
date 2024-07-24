@@ -82,10 +82,21 @@
   height: 70px;
 }
 
+.lap-program-detail {
+  font-size: 20px;
+}
+
 .lap-detail-img {
   width: 100%;
 }
 
+.lap-detail-row {
+  margin-bottom: 10px;
+}
+
+.lap-row-chapter {
+  font-weight: bold;
+}
 
 .lap-detail-msg {
   padding: 10px;
@@ -102,6 +113,10 @@
 
 .lap-row-section:active {
   background-color: #e4e4e4;
+}
+
+.lap-row-section.red {
+  color: red;
 }
 
 .lap-detail-back {

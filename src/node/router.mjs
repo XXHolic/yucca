@@ -1,5 +1,5 @@
 import { api } from "./api.mjs";
-import { getPrograms, getAuthors } from './home.mjs'
+import { getPrograms, getAuthors, getProgramDetail } from './home.mjs'
 
 
 const route = (req, res) => {
@@ -12,6 +12,10 @@ const route = (req, res) => {
     }
     case api.author: {
       getAuthors(res)
+      break;
+    }
+    case api.programDetail: {
+      getProgramDetail(req, res)
       break;
     }
     default: {
