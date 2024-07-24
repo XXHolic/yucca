@@ -1,9 +1,9 @@
-import { readdirSync, statSync, existsSync, writeFileSync } from "node:fs";
+import { readdirSync, statSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, extname } from "node:path";
 
 const fileArr = [];
-const getFilePath = () => {
-  const dir = "../localdatajson";
+const dir = "../localdata";
+const getFilePath = (dir) => {
   const exist = existsSync(dir);
   // 排除不需要遍历的文件夹或文件
   const excludeDir = /^(\.|node_module)/;
@@ -28,10 +28,15 @@ const getFilePath = () => {
 };
 
 const createFile = () => {
-  const writePath = "./songsPath.json";
-  writeFileSync(writePath, JSON.stringify(fileArr));
-  console.log("记录所有歌曲文件路径文件生成成功");
+  const arr = fileArr.map(ele => {
+    const fileContent = readFileSync(ele, { encoding: "utf-8" });
+    const { name, poster, path, author } = JSON.parse(fileContent);
+    return { id: path, title: name, author, poster }
+  })
+  const writePath = `../json/programs.json`;
+  writeFileSync(writePath, JSON.stringify(arr));
+  console.log("节目文件合集生成成功");
 };
 
-getFilePath();
+getFilePath(dir);
 createFile();
