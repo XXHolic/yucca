@@ -68,6 +68,14 @@
 
 .lap-list-status {
   width: 20px;
+  flex-shrink: 0;
+}
+
+.lap-list-img {
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+   flex-shrink: 0;
 }
 
 .lap-list-poster {
@@ -126,7 +134,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 358px;
     pointer-events: auto;
   background-color: #fff;
 }

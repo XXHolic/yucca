@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>本地音频节目</title>
   <link rel="shortcut icon" href="./asset/favicon.ico" />
@@ -11,33 +13,21 @@
   <link rel="stylesheet" href="./css/reset.css" />
   <link rel="stylesheet" href="./css/index.css" />
 </head>
+
 <body>
   <div class="lap-container">
     <div class="lap-body">
       <!-- 所有节目列表 -->
-      <div class="lap-program-list">
+      <div class="lap-program-list" id="lapProgram">
         <div class="lap-program-filter">
-          <label>作者：<select id="allWriter"><option value="0">全部</option><option value="1">1</option></select></label>
+          <label>作者：<select id="allWriter">
+              <option value="0">全部</option>
+            </select></label>
         </div>
-        <div class="lap-list-row">
-          <div class="lap-list-status"><i class="fa-solid fa-ear-listen fa-beat"></i></div>
-          <div><img class="lap-list-poster" src="./asset/list-default.png"></div>
-          <div>
-            <div>节目名称节目名称节目名称节</div>
-            <div>节目作者</div>
-          </div>
-        </div>
-        <div class="lap-list-row">
-          <div class="lap-list-status"></div>
-          <div><img class="lap-list-poster" src="./asset/list-default.png"></div>
-          <div>
-            <div>节目名称节目名称节目</div>
-            <div>节目作者</div>
-          </div>
-        </div>
+        <div id="lapListBody"></div>
       </div>
       <!-- 节目详情 -->
-      <div class="lap-program-detail lap-dn">
+      <div class="lap-program-detail lap-dn" id="lapProgramDetail">
         <div>
           <img class="lap-detail-img" src="./asset/detail-default.jpg">
         </div>
@@ -60,12 +50,15 @@
       <div class="lap-player">
         <div class="lap-touch-color"><i class="fa-solid fa-list fa-xl" data-type="list" style="color: #fff;"></i></div>
         <div class="lap-player-txt" id="playerMsg"></div>
-        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" data-type="time" style="color: #fff;"></i></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" data-type="time" style="color: #fff;"></i>
+        </div>
       </div>
       <div class="lap-player">
-        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" data-type="pre" style="color: #fff;"></i></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" data-type="pre"
+            style="color: #fff;"></i></div>
         <div><audio controls id="audioPlayer"></audio></div>
-        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" data-type="next" style="color: #fff;"></i></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" data-type="next"
+            style="color: #fff;"></i></div>
       </div>
     </div>
     <!-- 播放列表弹窗 -->
@@ -89,11 +82,12 @@
     </div>
     <div class="lap-info lap-dn" id="lapInfo"></div>
   </div>
-    <script type="module">
-      import { init } from './js/index.js'
-      window.onload = () => {
-        init();
-      }
-    </script>
+  <script type="module">
+    import { init } from './js/index.js'
+    window.onload = () => {
+      init();
+    }
+  </script>
 </body>
+
 </html>
