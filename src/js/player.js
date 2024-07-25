@@ -33,14 +33,14 @@ const playerMsg = document.querySelector("#playerMsg");
 
 const getMusic = async (params, opt = {}) => {
   const { needUpdate = true } = opt;
-  const { status, data } = await axios.post(api.song, params);
+  const { status, data } = await axios.post(api.audio, params);
   if (status == 200) {
     const { src, format, singerName, songName } = data;
     playerMsg.innerHTML = `${songName}-${singerName}`;
     playerTimeTotal.innerHTML = format;
     playerPlaying.style.width = "0%";
     audioEle.src = src;
-    audioEle.setAttribute("data-songid", params.songId); // 播放时给上一首、下一首功能用
+    audioEle.setAttribute("data-mark", params.songId); // 播放时给上一首、下一首功能用
     // 上一首，下一首功能不需要这个
     if (needUpdate) {
       axios.post(api.currentAdd, params).then(() => {
@@ -77,6 +77,8 @@ const getMusic = async (params, opt = {}) => {
 const audioEvent = () => {
   const playerContainer = document.querySelector("#playerContainer");
   const lapPopTime = document.querySelector("#lapPopTime");
+  const lapPopCurrent = document.querySelector("#lapPopCurrent");
+  const lapCurrentClose = document.querySelector("#lapCurrentClose");
 
   addEventOnce(playerContainer, "click", (e) => {
     const ele = e.target;
@@ -84,6 +86,7 @@ const audioEvent = () => {
     console.info("eleType", eleType);
     switch (eleType) {
       case "list": {
+        showTrigger.show(lapPopCurrent);
         break;
       }
       case "time": {
@@ -154,6 +157,10 @@ const audioEvent = () => {
         break;
       }
     }
+  });
+
+  lapCurrentClose.addEventListener("click", (e) => {
+    showTrigger.hide(lapPopCurrent);
   });
 };
 

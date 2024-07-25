@@ -38,9 +38,22 @@ const detailEvent = () => {
 
   addEventOnce(lapDetailList, "click", (e) => {
     const target = e.target;
-    const type = audioEle.getAttribute('data-type');
+    const type = target.getAttribute('data-type');
+    const sectionMark = target.getAttribute('data-mark');
+    const sectionId = target.getAttribute('data-id');
     const currentPlay = audioEle.getAttribute('data-mark');
-    target.setAttribute('class', 'lap-row-section red')
+    if (type !== 'play') {
+      return;
+    }
+    // 有已经或正在播放的，且是属于这个节目的，就要取消正在播放的样式
+    const isSameProgram = currentPlay && currentPlay.indexOf(sectionId) > -1 && currentPlay != sectionMark
+    if (isSameProgram) {
+      const selector = `.lap-row-section[data-mark="${currentPlay}"]`;
+      const playingTarget = lapDetailList.querySelector(selector);
+      playingTarget.setAttribute('class', 'lap-row-section');
+    } else {
+      target.setAttribute('class', 'lap-row-section red')
+    }
   })
 }
 
@@ -64,10 +77,10 @@ const getDetail = async (params) => {
         let childStr = ''
         if (child) {
           childStr = child.reduce((accChild, curChild) => {
-            const { fileName } = curChild
-            const mark = `id/${fileName}`
+            const { fileName } = curChild;
+            const mark = `${id}/${fileName}`
             const cls = currentPlay === mark ? 'lap-row-section red' : 'lap-row-section'
-            accChild += `<div class="${cls}" data-mark=${mark} data-type="play">${curChild.title}</div>`;
+            accChild += `<div class="${cls}" data-id="${id}" data-mark="${mark}" data-type="play">${curChild.title}</div>`;
             return accChild
           }, '')
 
