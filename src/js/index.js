@@ -1,7 +1,7 @@
 import axios from "../asset/js/axios.min.js";
 import { api } from "./api.js";
 import { spin, addEventOnce, showTrigger } from "./util.js";
-import { audioEvent, getAudio } from "./player.js";
+import { audioEvent, getAudio, getCurrent, AudioPlayer } from "./player.js";
 
 let originData = [] // 用来本地筛选
 
@@ -51,9 +51,11 @@ const detailEvent = () => {
       const selector = `.lap-row-section[data-mark="${currentPlay}"]`;
       const playingTarget = lapDetailList.querySelector(selector);
       playingTarget && playingTarget.setAttribute('class', 'lap-row-section');
-      target.setAttribute('class', 'lap-row-section red')
+      target.setAttribute('class', 'lap-row-section red');
+      const hasInstance = AudioPlayer.get(audioEle);
+      hasInstance && AudioPlayer.resetCount();
+      getAudio({ id: sectionId, mark: sectionMark, title: target.innerText })
     }
-    getAudio({ id: sectionId, mark: sectionMark, title: target.innerText })
   })
 }
 
@@ -152,5 +154,6 @@ const init = () => {
   getPrograms()
   getAuthors()
   audioEvent();
+  getCurrent({ showSpin: false })
 };
 export { init };

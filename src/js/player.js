@@ -9,23 +9,24 @@ class AudioPlayer {
     ele[expando] = this;
     this.ele = ele;
     this.src = src;
-    this.playCount = 0;
   }
+
+  static playCount = 0
 
   static get(ele) {
     return ele[expando];
   }
 
   getCount() {
-    return this.playCount;
+    return AudioPlayer.playCount;
   }
 
-  resetCount() {
-    this.playCount = 0;
+  static resetCount() {
+    AudioPlayer.playCount = 0;
   }
 
   addCount() {
-    this.playCount = this.playCount + 1;
+    AudioPlayer.playCount = AudioPlayer.playCount + 1;
   }
 
   play() {
@@ -44,6 +45,13 @@ class AudioPlayer {
 const audioEle = document.querySelector("#audioPlayer");
 const playerMsg = document.querySelector("#playerMsg");
 const lapCurrentList = document.querySelector("#lapCurrentList");
+
+const getAudioMsg = (ele) => {
+  const id = ele.getAttribute("data-id");
+  const mark = ele.getAttribute("data-mark");
+  const title = ele.innerText;
+  return { id, mark, title }
+}
 
 const getCurrent = async (params = {}) => {
   const { showSpin = true } = params;
@@ -163,20 +171,39 @@ const getAudio = async (params, opt = {}) => {
     player.play();
 
     player.on("ended", () => {
-      const playerCycleOrder = document.querySelector(".lap-time-opt active");
-      // 顺序播放
-      if (playerCycleOrder.style.display === "block") {
-        const songId = audioEle.getAttribute("data-songid");
-        const selector = `.lmp-song-row[data-songid='${songId}']`;
-        const playingRow = playerPopList.querySelector(selector);
-        const nextId = playingRow.getAttribute("data-nextid");
-        const selectorNext = `.lmp-song-row[data-songid='${nextId}']`;
-        const targetRow = playerPopList.querySelector(selectorNext);
-        const msg = getSongMsg(targetRow);
-        getAudio(msg, { needUpdate: false });
-      } else {
-        player.play();
+      const timeSet = storage.get("timeSet");
+      const playCount = player.getCount();
+      // 当前播放
+      if (timeSet == "1") {
+        return;
       }
+      // 两集，已经播放完一集
+      if (timeSet == "2" && playCount >= 1) {
+        return;
+      }
+      // 三集，已经播放完2集
+      if (timeSet == "3" && playCount >= 2) {
+        return;
+      }
+      // 四集，已经播放完3集
+      if (timeSet == "4" && playCount >= 3) {
+        return;
+      }
+      player.addCount()
+      const mark = audioEle.getAttribute("data-mark");
+      const selector = `.lap-row-section[data-mark='${mark}']`;
+      const playingRow = lapCurrentList.querySelector(selector);
+      const id = playingRow.getAttribute("data-id");
+      const nextId = playingRow.getAttribute("data-next");
+      if (nextId === 'none') {
+        info.show("这是最后一集节目");
+        return;
+      }
+      const selectorNext = `.lap-row-section[data-mark='${id}/${nextId}']`;
+      const targetRow = lapCurrentList.querySelector(selectorNext);
+      const msg = getAudioMsg(targetRow);
+      getAudio(msg, { needUpdate: false });
+
     });
   } else {
     audioEle.play();
@@ -201,7 +228,7 @@ const audioEvent = () => {
   addEventOnce(playerContainer, "click", (e) => {
     const ele = e.target;
     const eleType = ele.getAttribute("data-type");
-    console.info("eleType", eleType);
+    // console.info("eleType", eleType);
     switch (eleType) {
       case "list": {
         getCurrent();
@@ -229,13 +256,18 @@ const audioEvent = () => {
           info.show("暂无节目播放");
           return;
         }
-        const songId = audioEle.getAttribute("data-songid");
-        const selector = `.lmp-song-row[data-songid='${songId}']`;
-        const playingRow = playerPopList.querySelector(selector);
-        const preId = playingRow.getAttribute("data-preid");
-        const selectorPre = `.lmp-song-row[data-songid='${preId}']`;
-        const targetRow = playerPopList.querySelector(selectorPre);
-        const msg = getSongMsg(targetRow);
+        const mark = audioEle.getAttribute("data-mark");
+        const selector = `.lap-row-section[data-mark='${mark}']`;
+        const playingRow = lapCurrentList.querySelector(selector);
+        const id = playingRow.getAttribute("data-id");
+        const preId = playingRow.getAttribute("data-pre");
+        if (preId === 'none') {
+          info.show("这是第一集节目");
+          return;
+        }
+        const selectorPre = `.lap-row-section[data-mark='${id}/${preId}']`;
+        const targetRow = lapCurrentList.querySelector(selectorPre);
+        const msg = getAudioMsg(targetRow);
         getAudio(msg, { needUpdate: false });
         setTimeout(() => {
           getCurrent({ showSpin: false });
@@ -247,13 +279,18 @@ const audioEvent = () => {
           info.show("暂无节目播放");
           return;
         }
-        const songId = audioEle.getAttribute("data-songid");
-        const selector = `.lmp-song-row[data-songid='${songId}']`;
-        const playingRow = playerPopList.querySelector(selector);
-        const nextId = playingRow.getAttribute("data-nextid");
-        const selectorNext = `.lmp-song-row[data-songid='${nextId}']`;
-        const targetRow = playerPopList.querySelector(selectorNext);
-        const msg = getSongMsg(targetRow);
+        const mark = audioEle.getAttribute("data-mark");
+        const selector = `.lap-row-section[data-mark='${mark}']`;
+        const playingRow = lapCurrentList.querySelector(selector);
+        const id = playingRow.getAttribute("data-id");
+        const nextId = playingRow.getAttribute("data-next");
+        if (nextId === 'none') {
+          info.show("这是最后一集节目");
+          return;
+        }
+        const selectorNext = `.lap-row-section[data-mark='${id}/${nextId}']`;
+        const targetRow = lapCurrentList.querySelector(selectorNext);
+        const msg = getAudioMsg(targetRow);
         getAudio(msg, { needUpdate: false });
         setTimeout(() => {
           getCurrent({ showSpin: false });
@@ -270,6 +307,7 @@ const audioEvent = () => {
       case "time": {
         const id = ele.getAttribute("data-id");
         storage.set("timeSet", id);
+        AudioPlayer.resetCount();
         showTrigger.hide(lapPopTime);
       }
       case "cancel": {
@@ -298,10 +336,12 @@ const audioEvent = () => {
       const selector = `.lap-row-section[data-mark="${currentMark}"]`;
       const listTarget = lapCurrentList.querySelector(selector);
       listTarget && listTarget.setAttribute('class', 'lap-row-section');
-      target.setAttribute('class', 'lap-row-section red')
+      target.setAttribute('class', 'lap-row-section red');
+      const hasInstance = AudioPlayer.get(audioEle);
+      hasInstance && AudioPlayer.resetCount();
+      getAudio({ id: audioId, mark: audioMark, title: target.innerText }, { needUpdate: false })
     }
-    getAudio({ id: audioId, mark: audioMark, title: target.innerText })
   });
 };
 
-export { getAudio, audioEvent };
+export { getAudio, getCurrent, audioEvent, AudioPlayer };
