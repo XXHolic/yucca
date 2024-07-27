@@ -15,10 +15,7 @@ const lapDetailList = document.querySelector("#lapDetailList");
 const formatList = (data) => {
   const listStr = data.reduce((acc, cur, index) => {
     const { id, title, author, poster } = cur;
-    const isPlaying = false;
-    const playingMark = isPlaying ? '<i class="fa-solid fa-ear-listen fa-beat"></i>' : '';
     acc += `<div class="lap-list-row" data-id=${id}>
-          <div class="lap-list-status">${playingMark}</div>
           <div class="lap-list-img"><img class="lap-list-poster" src="./localdata/${id}/${poster}"></div>
           <div>
             <div>${title}</div>
