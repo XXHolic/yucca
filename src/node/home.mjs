@@ -24,4 +24,23 @@ const getProgramDetail = (req, res) => {
   });
 }
 
-export { getPrograms, getAuthors, getProgramDetail }
+const addCurrent = (req, res) => {
+  dealPost(req, async (params) => {
+    const { id } = params
+    const detailPath = `../json/${id}.json`
+    const contents = await readFile(detailPath, { encoding: "utf-8" });
+    const writePath = '../json/current.json'
+    writeFile(writePath, contents).then(() => {
+      backOkMsg(res)
+    })
+  });
+}
+
+const getCurrent = async (req, res) => {
+  const currentPath = '../json/current.json'
+  const contents = await readFile(currentPath, { encoding: "utf-8" });
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(contents);
+}
+
+export { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent }

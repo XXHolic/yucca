@@ -54,7 +54,7 @@
       <div class="lap-player">
         <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" data-type="pre"
             style="color: #fff;"></i></div>
-        <div><audio controls id="audioPlayer"></audio></div>
+        <audio controls id="audioPlayer"></audio>
         <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" data-type="next"
             style="color: #fff;"></i></div>
       </div>
@@ -62,8 +62,8 @@
     <!-- 播放列表弹窗 -->
     <div class="lap-popup lap-popup-list lap-dn" id="lapPopCurrent">
       <div class="lap-popup-current">
-        <div id="lapCurrentTitle">名称</div>
-        <div id="lapCurrentAuthor">作者</div>
+        <div class="lap-current-title" id="lapCurrentTitle">名称</div>
+        <div class="lap-current-author" id="lapCurrentAuthor">作者</div>
         <div id="lapCurrentList"></div>
         <div class="lap-current-close" id="lapCurrentClose">关闭</div>
       </div>

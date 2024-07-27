@@ -1,7 +1,7 @@
 import axios from "../asset/js/axios.min.js";
 import { api } from "./api.js";
 import { spin, addEventOnce, showTrigger } from "./util.js";
-import { audioEvent } from "./player.js";
+import { audioEvent, getAudio } from "./player.js";
 
 let originData = [] // 用来本地筛选
 
@@ -46,14 +46,14 @@ const detailEvent = () => {
       return;
     }
     // 有已经或正在播放的，且是属于这个节目的，就要取消正在播放的样式
-    const isSameProgram = currentPlay && currentPlay.indexOf(sectionId) > -1 && currentPlay != sectionMark
-    if (isSameProgram) {
+    const isSameProgram = currentPlay && currentPlay === sectionMark
+    if (!isSameProgram) {
       const selector = `.lap-row-section[data-mark="${currentPlay}"]`;
       const playingTarget = lapDetailList.querySelector(selector);
-      playingTarget.setAttribute('class', 'lap-row-section');
-    } else {
+      playingTarget && playingTarget.setAttribute('class', 'lap-row-section');
       target.setAttribute('class', 'lap-row-section red')
     }
+    getAudio({ id: sectionId, mark: sectionMark, title: target.innerText })
   })
 }
 
@@ -80,7 +80,7 @@ const getDetail = async (params) => {
             const { fileName } = curChild;
             const mark = `${id}/${fileName}`
             const cls = currentPlay === mark ? 'lap-row-section red' : 'lap-row-section'
-            accChild += `<div class="${cls}" data-id="${id}" data-mark="${mark}" data-type="play">${curChild.title}</div>`;
+            accChild += `<div class="${cls}" data-id="${id}" data-mark="${mark}" data-name="${fileName}" data-type="play">${curChild.title}</div>`;
             return accChild
           }, '')
 

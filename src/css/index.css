@@ -36,6 +36,8 @@
 
 .lap-player-txt {
   width: 300px;
+  color: #fff;
+  font-size: 16px;
 }
 
 .lap-list-row {
@@ -197,10 +199,24 @@
   background-color: #fff;
   padding-bottom: 50px;
   pointer-events: auto;
+  font-size: 18px;
+}
+
+.lap-popup-current .lap-detail-row {
+  margin-bottom: 0;
+}
+.lap-popup-current .lap-row-chapter {
+  padding: 0 10px;
+}
+
+.lap-current-title,
+.lap-current-author {
+  padding: 0 10px;
+  text-align: center;
 }
 
 .lap-current-close {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   text-align: center;
