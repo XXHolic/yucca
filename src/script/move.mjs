@@ -1,10 +1,12 @@
 // 统一移动文件
 import { rename, readdirSync, statSync, existsSync } from "node:fs";
 import { join, extname, basename } from "node:path";
+import { createFold } from "./util.mjs";
 
 const fileArr = [];
-const dir = "F:/kan/restate-history-06";
-const destPathPre = "F:/kan/yucca/src/localdata/restate-history-06";
+const foldName = 'person-mind';
+const dir = `G:/kanlx/${foldName}`;
+const destPathPre = `G:/yucca/src/localdata/${foldName}`;
 
 const getFilePath = (dir) => {
   const exist = existsSync(dir);
@@ -31,7 +33,15 @@ const getFilePath = (dir) => {
 };
 
 const moveFile = () => {
+  const moveFile = [{ path: `${dir}/poster.jpg`, fileName: 'poster.jpg' }, { path: `${dir}/listFormat.json`, fileName: 'data.json' }]
+  createFold(destPathPre);
   fileArr.map(ele => {
+    const { fileName } = ele
+    rename(ele.path, `${destPathPre}/${fileName}`, (err) => {
+      if (err) throw err;
+    });
+  })
+  moveFile.map(ele => {
     const { fileName } = ele
     rename(ele.path, `${destPathPre}/${fileName}`, (err) => {
       if (err) throw err;

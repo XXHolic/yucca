@@ -1,12 +1,12 @@
 // 格式化节目信息
 import { readFileSync, writeFileSync } from "node:fs";
 
-const fileName = 'restate-history-06'
+const fileName = 'person-mind'
 const getData = () => {
   const filePath = `../localdata/${fileName}/data.json`;
   const fileContent = readFileSync(filePath, { encoding: "utf-8" });
-  const { name, poster, path, catalogs, date, author } = JSON.parse(fileContent);
-  let msg = { id: path, title: name, author, poster, date }
+  const { title, poster, path, catalogs, date, author } = JSON.parse(fileContent);
+  let msg = { id: path, title, author, poster, date }
   const list = catalogs.map(ele => {
     const { id, catalogTitle, child } = ele;
     let temObj = {

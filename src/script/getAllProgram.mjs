@@ -28,6 +28,7 @@ const getFilePath = (dir) => {
 };
 
 const createFile = () => {
+
   const arr = fileArr.map(ele => {
     const fileContent = readFileSync(ele, { encoding: "utf-8" });
     const { name, poster, path, author } = JSON.parse(fileContent);

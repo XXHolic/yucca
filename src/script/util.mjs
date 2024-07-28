@@ -6,6 +6,7 @@ import {
   writeFile,
   unlink,
   unlinkSync,
+  mkdirSync
 } from "node:fs";
 import { join, extname } from "node:path";
 
@@ -86,22 +87,34 @@ const clearFile = () => {
   console.log("clear all file done");
 };
 
-// 冒泡排序示例
-var arr = [5, 4, 3, 2, 1];
-console.log("初始数组：", arr); // 5,4,3,2,1
-//一次次遍历，有多少个数就遍历多少次
-for (var i = 0; i < arr.length; i++) {
-  //循环两两比较数组中的数字
-  for (var j = 0; j < arr.length; j++) {
-    //if判断，如果数组中的当前一个比后一个大，那么两个交换一下位置
-    if (arr[j] > arr[j + 1]) {
-      var tmp = arr[j];
-      arr[j] = arr[j + 1];
-      arr[j + 1] = tmp;
-      console.log("i=" + i, arr);
+const createFold = (path) => {
+  if (existsSync(path)) {
+    console.log(`fold exist ${path} `)
+  } else {
+    mkdirSync(path);
+    console.log(`creat fold ${path} `)
+  }
+
+}
+
+const sortTest = () => {
+  // 冒泡排序示例
+  var arr = [5, 4, 3, 2, 1];
+  console.log("初始数组：", arr); // 5,4,3,2,1
+  //一次次遍历，有多少个数就遍历多少次
+  for (var i = 0; i < arr.length; i++) {
+    //循环两两比较数组中的数字
+    for (var j = 0; j < arr.length; j++) {
+      //if判断，如果数组中的当前一个比后一个大，那么两个交换一下位置
+      if (arr[j] > arr[j + 1]) {
+        var tmp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = tmp;
+        console.log("i=" + i, arr);
+      }
     }
   }
+  console.log("排序结束：", arr); // 1,2,3,4,5
 }
-console.log("排序结束：", arr); // 1,2,3,4,5
 
-export { readDirFile, readDir, clearFile };
+export { readDirFile, readDir, clearFile, createFold };
