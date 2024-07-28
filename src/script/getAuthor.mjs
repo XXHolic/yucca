@@ -28,11 +28,14 @@ const getFilePath = (dir) => {
 };
 
 const createFile = () => {
-  const arr = fileArr.map(ele => {
+  const arr = []
+  for (const ele of fileArr) {
     const fileContent = readFileSync(ele, { encoding: "utf-8" });
-    const { name, poster, path, catalogs, date, author } = JSON.parse(fileContent);
-    return author
-  })
+    const { author } = JSON.parse(fileContent);
+    if (arr.indexOf(author) == -1) {
+      arr.push(author)
+    }
+  }
   const writePath = `../json/authors.json`;
   writeFileSync(writePath, JSON.stringify(arr));
   console.log("所有作者文件生成成功");

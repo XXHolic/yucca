@@ -80,6 +80,10 @@
    flex-shrink: 0;
 }
 
+.lap-author {
+  color: #9392a7;
+}
+
 .lap-list-poster {
   height: 70px;
 }

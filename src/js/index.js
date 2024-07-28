@@ -19,7 +19,7 @@ const formatList = (data) => {
           <div class="lap-list-img"><img class="lap-list-poster" src="./localdata/${id}/${poster}"></div>
           <div>
             <div>${title}</div>
-            <div style="color: #9392a7">${author}</div>
+            <div class="lap-author">${author}</div>
           </div>
         </div>`;
     return acc;
