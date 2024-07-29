@@ -14,12 +14,12 @@ const lapDetailList = document.querySelector("#lapDetailList");
 
 const formatList = (data) => {
   const listStr = data.reduce((acc, cur, index) => {
-    const { id, title, author, poster } = cur;
+    const { id, title, author, poster, date } = cur;
     acc += `<div class="lap-list-row" data-id=${id}>
-          <div class="lap-list-img"><img class="lap-list-poster" src="./localdata/${id}/${poster}"></div>
+          <div class="lap-list-img"><img class="lap-list-poster" data-src="./localdata/${id}/${poster}" src="./asset/list-default.png"></div>
           <div>
             <div>${title}</div>
-            <div class="lap-author">${author}</div>
+            <div class="lap-author">${date} ${author}</div>
           </div>
         </div>`;
     return acc;
@@ -101,6 +101,27 @@ const getDetail = async (params) => {
 
 }
 
+const lazyLoadImg = () => {
+  const imgEle = listObj.getElementsByTagName("img");
+  callback(imgEle);
+  const observer = new IntersectionObserver(callback);
+  function callback(entries) {
+    for (let i of entries) {
+      if (i.isIntersecting) {
+        let img = i.target;
+        let trueSrc = img.getAttribute("data-src");
+        img.setAttribute("src", trueSrc);
+        observer.unobserve(img);
+      }
+    }
+  }
+  for (let i of imgEle) {
+    if (!i.isIntersecting) {
+      observer.observe(i);
+    }
+  }
+}
+
 const listEvent = () => {
   const newNodeList = lapListBody.querySelectorAll(".lap-list-row");
   for (let i = 0; i < newNodeList.length; i++) {
@@ -111,21 +132,23 @@ const listEvent = () => {
       getDetail({ id })
     })
   }
+
+  lazyLoadImg();
 }
 
 const eventInit = () => {
   allWriter.addEventListener("change", () => {
     const index = allWriter.selectedIndex; //序号，取当前选中选项的序号
     const text = allWriter.options[index].text;
-    const validData = originData.filter(ele => ele.author == text)
+    const validData = text === '全部' ? originData : originData.filter(ele => ele.author == text)
     formatList(validData)
     setTimeout(() => {
-      listEvent()
+      listEvent();
     }, 1000)
   });
 
   setTimeout(() => {
-    listEvent()
+    listEvent();
   }, 1000)
 };
 

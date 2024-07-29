@@ -1,7 +1,7 @@
 // 格式化节目信息
 import { readFileSync, writeFileSync } from "node:fs";
 
-const fileName = 'person-mind'
+const fileName = 'original-read-06'
 const getData = () => {
   const filePath = `../localdata/${fileName}/data.json`;
   const fileContent = readFileSync(filePath, { encoding: "utf-8" });
@@ -26,7 +26,7 @@ const getData = () => {
   msg.list = list
   const writePath = `../json/${fileName}.json`;
   writeFileSync(writePath, JSON.stringify(msg));
-  console.log("节目文件生成成功");
+  console.log(`${fileName} 节目文件生成成功`);
 };
 
 getData();

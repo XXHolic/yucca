@@ -4,7 +4,7 @@ import { join, extname, basename } from "node:path";
 import { createFold } from "./util.mjs";
 
 const fileArr = [];
-const foldName = 'person-mind';
+const foldName = 'original-read-06';
 const dir = `G:/kanlx/${foldName}`;
 const destPathPre = `G:/yucca/src/localdata/${foldName}`;
 
@@ -33,7 +33,9 @@ const getFilePath = (dir) => {
 };
 
 const moveFile = () => {
-  const moveFile = [{ path: `${dir}/poster.jpg`, fileName: 'poster.jpg' }, { path: `${dir}/listFormat.json`, fileName: 'data.json' }]
+  // const moveFile = [{ path: `${dir}/poster.jpg`, fileName: 'poster.jpg' }, { path: `${dir}/listFormat.json`, fileName: 'data.json' }]
+  const moveFile = [{ path: `${dir}/poster.jpeg`, fileName: 'poster.jpeg' }, { path: `${dir}/listFormat.json`, fileName: 'data.json' }]
+  // const moveFile = [{ path: `${dir}/poster.png`, fileName: 'poster.png' }, { path: `${dir}/listFormat.json`, fileName: 'data.json' }]
   createFold(destPathPre);
   fileArr.map(ele => {
     const { fileName } = ele

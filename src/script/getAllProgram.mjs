@@ -30,8 +30,8 @@ const getFilePath = (dir) => {
 const createFile = () => {
   const arr = fileArr.map(ele => {
     const fileContent = readFileSync(ele, { encoding: "utf-8" });
-    const { title, poster, path, author } = JSON.parse(fileContent);
-    return { id: path, title, author, poster }
+    const { title, poster, path, author, date } = JSON.parse(fileContent);
+    return { id: path, title, author, poster, date }
   })
   const writePath = `../json/programs.json`;
   writeFileSync(writePath, JSON.stringify(arr));
