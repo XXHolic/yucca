@@ -1,15 +1,21 @@
 import { readFile, writeFile, unlink } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { dealPost, backOkMsg, backErrMsg } from "./util.mjs";
 
+// 这个是针对 pm2 启动时无法找到路径的问题
+const fileName = fileURLToPath(import.meta.url)
+const preFold = resolve(dirname(fileName), '..');
+
 const getPrograms = async (res) => {
-  const programPath = '../json/programs.json'
+  const programPath = `${preFold}/json/programs.json`
   const contents = await readFile(programPath, { encoding: "utf-8" });
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(contents);
 }
 
 const getAuthors = async (res) => {
-  const authorPath = '../json/authors.json'
+  const authorPath = `${preFold}/json/authors.json`
   const contents = await readFile(authorPath, { encoding: "utf-8" });
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(contents);
@@ -17,7 +23,7 @@ const getAuthors = async (res) => {
 
 const getProgramDetail = (req, res) => {
   dealPost(req, async (params) => {
-    const detailPath = `../json/${params.id}.json`
+    const detailPath = `${preFold}/json/${params.id}.json`
     const contents = await readFile(detailPath, { encoding: "utf-8" });
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(contents);
@@ -27,9 +33,9 @@ const getProgramDetail = (req, res) => {
 const addCurrent = (req, res) => {
   dealPost(req, async (params) => {
     const { id } = params
-    const detailPath = `../json/${id}.json`
+    const detailPath = `${preFold}/json/${id}.json`
     const contents = await readFile(detailPath, { encoding: "utf-8" });
-    const writePath = '../json/current.json'
+    const writePath = `${preFold}/json/current.json`
     writeFile(writePath, contents).then(() => {
       backOkMsg(res)
     })
@@ -37,7 +43,7 @@ const addCurrent = (req, res) => {
 }
 
 const getCurrent = async (req, res) => {
-  const currentPath = '../json/current.json'
+  const currentPath = `${preFold}/json/current.json`
   const contents = await readFile(currentPath, { encoding: "utf-8" });
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(contents);
