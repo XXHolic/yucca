@@ -34,8 +34,12 @@
   align-items: center;
 }
 
+.lap-player-audio {
+  width: 280px;
+}
+
 .lap-player-txt {
-  width: 300px;
+  width: 280px;
   color: #fff;
   font-size: 16px;
 }
@@ -45,7 +49,6 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  font-size: 20px;
   border-bottom: 1px solid #e4e4e4;
 }
 
@@ -86,10 +89,6 @@
 
 .lap-list-poster {
   height: 70px;
-}
-
-.lap-program-detail {
-  font-size: 20px;
 }
 
 .lap-detail-img {
