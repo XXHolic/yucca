@@ -1,7 +1,7 @@
 import axios from "../asset/js/axios.min.js";
 import { api } from "./api.js";
 import { spin, addEventOnce, showTrigger } from "./util.js";
-import { audioEvent, getAudio, getCurrent, AudioPlayer } from "./player.js";
+import { audioEvent, getAudio, getCurrent, AudioPlayer, getCurrentPlay } from "./player.js";
 
 let originData = [] // 用来本地筛选
 
@@ -17,7 +17,7 @@ const formatList = (data) => {
     const { id, title, author, poster, date } = cur;
     acc += `<div class="lap-list-row" data-id=${id}>
           <div class="lap-list-img"><img class="lap-list-poster" data-src="./localdata/${id}/${poster}" src="./asset/list-default.png"></div>
-          <div>
+          <div class="lap-list-msg">
             <div>${title}</div>
             <div class="lap-author">${date} ${author}</div>
           </div>
@@ -171,9 +171,10 @@ const getPrograms = async () => {
 };
 
 const init = () => {
-  getPrograms()
-  getAuthors()
+  getPrograms();
+  getAuthors();
   audioEvent();
-  getCurrent({ showSpin: false })
+  getCurrent({ showSpin: false });
+  getCurrentPlay();
 };
 export { init };

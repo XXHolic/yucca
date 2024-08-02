@@ -11,6 +11,8 @@ const api = {
   audio: "/api/audio",
   current: "/api/current",
   currentAdd: "/api/current/add",
+  currentPlaySave: "/api/current/save",
+  currentPlayGet: "/api/current/get",
 };
 
 export { api };

@@ -1,5 +1,5 @@
 import { api } from "./api.mjs";
-import { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent } from './home.mjs'
+import { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay } from './home.mjs'
 
 
 const route = (req, res) => {
@@ -24,6 +24,14 @@ const route = (req, res) => {
     }
     case api.current: {
       getCurrent(req, res)
+      break;
+    }
+    case api.currentPlaySave: {
+      saveCurrentPlay(req, res)
+      break;
+    }
+    case api.currentPlayGet: {
+      getCurrentPlay(req, res)
       break;
     }
     default: {

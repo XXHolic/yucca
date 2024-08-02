@@ -49,4 +49,21 @@ const getCurrent = async (req, res) => {
   res.end(contents);
 }
 
-export { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent }
+const saveCurrentPlay = (req, res) => {
+  dealPost(req, (params) => {
+    const playPath = `${preFold}/json/current-play.json`
+    writeFile(playPath, JSON.stringify(params)).then(() => {
+      backOkMsg(res)
+    })
+  });
+}
+
+const getCurrentPlay = async (req, res) => {
+  const playPath = `${preFold}/json/current-play.json`
+  const contents = await readFile(playPath, { encoding: "utf-8" });
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(contents);
+}
+
+
+export { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay }

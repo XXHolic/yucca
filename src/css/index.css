@@ -71,6 +71,10 @@
   background-color: #fff;
 }
 
+.lap-list-msg {
+  flex: 1;
+}
+
 .lap-list-status {
   width: 20px;
   flex-shrink: 0;
@@ -132,6 +136,7 @@
   text-align: center;
   border: 1px solid #e4e4e4;
   border-radius: 20px;
+  background-color: #fff;
 }
 
 .lap-popup,

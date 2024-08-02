@@ -152,6 +152,22 @@ const getCurrent = async (params = {}) => {
 
 }
 
+const getCurrentPlay = async () => {
+  try {
+    const { status, data } = await axios.get(api.currentPlayGet);
+    if (status == 200) {
+      const { mark, title = '', src } = data
+      if (mark) {
+        playerMsg.innerHTML = title;
+        audioEle.setAttribute('data-mark', mark);
+        audioEle.src = src;
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const getAudio = async (params, opt = {}) => {
   const { needUpdate = true } = opt;
   const { title, mark } = params;
@@ -169,6 +185,8 @@ const getAudio = async (params, opt = {}) => {
   if (!hasInstance) {
     const player = new AudioPlayer({ ele: audioEle, src });
     player.play();
+
+    // player.on("play", () => { })
 
     player.on("ended", () => {
       const timeSet = storage.get("timeSet");
@@ -208,6 +226,12 @@ const getAudio = async (params, opt = {}) => {
   } else {
     audioEle.play();
   }
+  try {
+    axios.post(api.currentPlaySave, { title, mark, src })
+  } catch (error) {
+    console.log(error)
+  }
+
 };
 
 const popPlayIntoView = () => {
@@ -344,4 +368,4 @@ const audioEvent = () => {
   });
 };
 
-export { getAudio, getCurrent, audioEvent, AudioPlayer };
+export { getAudio, getCurrent, audioEvent, AudioPlayer, getCurrentPlay };
