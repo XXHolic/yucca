@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>本地音频节目</title>
+  <link rel="shortcut icon" href="./asset/favicon.ico" />
+  <link rel="stylesheet" href="./asset/css/fontawesome.css" />
+  <link rel="stylesheet" href="./asset/css/solid.css" />
+  <link rel="stylesheet" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <div class="lap-container">
+    <div class="lap-body">
+      <!-- 所有节目列表 -->
+      <div class="lap-program-list" id="lapProgram">
+        <div class="lap-program-filter">
+          <label>
+            作者：<select id="allWriter">
+              <option value="0">全部</option>
+            </select>
+          </label>
+          <div class="lap-user">用户：<span id="lapUser">--</span></div>
+        </div>
+        <div id="lapListBody"></div>
+      </div>
+      <!-- 节目详情 -->
+      <div class="lap-program-detail lap-dn" id="lapProgramDetail">
+        <div>
+          <img class="lap-detail-img" src="./asset/detail-default.jpg" id="lapDetailPoster">
+        </div>
+        <div class="lap-detail-msg">
+          <div id="lapDetailTitle"></div>
+          <div class="lap-author" id="lapDetailAuthor"></div>
+          <div id="lapDetailDate"></div>
+        </div>
+        <div class="lap-detail-list" id="lapDetailList"></div>
+        <div class="lap-detail-back" id="lapDetailBack"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+      </div>
+
+    </div>
+    <div class="lap-footer" id="playerContainer">
+      <div class="lap-player">
+        <div class="lap-touch-color"><i class="fa-solid fa-list fa-xl" data-type="list" style="color: #fff;"></i></div>
+        <div class="lap-player-txt" id="playerMsg"></div>
+        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" data-type="time" style="color: #fff;"></i>
+        </div>
+      </div>
+      <div class="lap-player">
+        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" data-type="pre"
+            style="color: #fff;"></i></div>
+        <audio class="lap-player-audio" controls id="audioPlayer"></audio>
+        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" data-type="next"
+            style="color: #fff;"></i></div>
+      </div>
+    </div>
+    <!-- 播放列表弹窗 -->
+    <div class="lap-popup lap-popup-list lap-dn" id="lapPopCurrent">
+      <div class="lap-popup-current">
+        <div class="lap-current-title" id="lapCurrentTitle">名称</div>
+        <div class="lap-current-author lap-author" id="lapCurrentAuthor">作者</div>
+        <div id="lapCurrentList"></div>
+        <div class="lap-current-close" id="lapCurrentClose">关闭</div>
+      </div>
+    </div>
+    <!-- 时间设定弹窗 -->
+    <div class="lap-popup lap-dn" id="lapPopTime">
+      <div class="lap-popup-time">
+        <div class="lap-time-title">定时设置</div>
+        <div class="lap-time-opt active" data-type="time" data-id="0">顺序播放</div>
+        <div class="lap-time-opt" data-type="time" data-id="1">播放当前</div>
+        <div class="lap-time-opt" data-type="time" data-id="2">播放两集</div>
+        <div class="lap-time-opt" data-type="time" data-id="3">播放三集</div>
+        <div class="lap-time-opt" data-type="time" data-id="4">播放四集</div>
+        <div class="lap-time-cancel" data-type="cancel">取消</div>
+      </div>
+    </div>
+    <div class="lap-spin lap-dn" id="lapSpin">
+      <div class="lap-flex-center" style="height: 100%;color: #fff;">
+        <i class="fa-solid fa-spinner fa-spin fa-2xl"></i>
+      </div>
+    </div>
+    <div class="lap-info lap-dn" id="lapInfo"></div>
+  </div>
+  <script type="module">
+    import { init } from './js/home.js'
+    window.onload = () => {
+      init();
+    }
+  </script>
+</body>
+
+</html>

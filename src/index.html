@@ -15,84 +15,124 @@
   <link rel="stylesheet" href="./asset/css/solid.css" />
   <link rel="stylesheet" href="./css/reset.css" />
   <link rel="stylesheet" href="./css/index.css" />
+  <style>
+    .lap-slogan {
+      text-align: center;
+      padding: 50px 0;
+    }
+
+    .lap-login-mb10 {
+      margin-bottom: 10px;
+    }
+
+    .lap-login-tab {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .lap-tab {
+      width: 100px;
+      height: 40px;
+      border: 1px solid #e4e4e4;
+      line-height: 40px;
+      text-align: center;
+      background-color: #e4e4e4;
+      color: #959da6;
+    }
+
+    .lap-tab.active {
+      background-color: #fff;
+      color: inherit;
+    }
+
+    .lap-login-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lap-login-input {
+      width: 160px;
+    }
+
+    .lap-login-btn1 {
+      width: 204px;
+      padding-left: 54px;
+    }
+
+    .lap-login-btn2 {
+      width: 240px;
+      padding-left: 90px;
+    }
+
+    .lap-login-error {
+      color: red;
+    }
+
+    .lap-register-error {
+      padding-left: 90px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="lap-container">
     <div class="lap-body">
-      <!-- 所有节目列表 -->
-      <div class="lap-program-list" id="lapProgram">
-        <div class="lap-program-filter">
-          <label>作者：<select id="allWriter">
-              <option value="0">全部</option>
-            </select></label>
-        </div>
-        <div id="lapListBody"></div>
+      <div class="lap-slogan">不保证成功<br />不一定有用<br />知识只是点亮世界的灵光</div>
+      <div class="lap-login-tab">
+        <div class="lap-tab active" data-type="login" id="loginTab">登陆</div>
+        <div class="lap-tab" data-type="register" id="registerTab">注册</div>
+        <div class="lap-tab" data-type="tourist" id="touristTab">游客</div>
       </div>
-      <!-- 节目详情 -->
-      <div class="lap-program-detail lap-dn" id="lapProgramDetail">
-        <div>
-          <img class="lap-detail-img" src="./asset/detail-default.jpg" id="lapDetailPoster">
-        </div>
-        <div class="lap-detail-msg">
-          <div id="lapDetailTitle"></div>
-          <div class="lap-author" id="lapDetailAuthor"></div>
-          <div id="lapDetailDate"></div>
-        </div>
-        <div class="lap-detail-list" id="lapDetailList"></div>
-        <div class="lap-detail-back" id="lapDetailBack"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-      </div>
-
-    </div>
-    <div class="lap-footer" id="playerContainer">
-      <div class="lap-player">
-        <div class="lap-touch-color"><i class="fa-solid fa-list fa-xl" data-type="list" style="color: #fff;"></i></div>
-        <div class="lap-player-txt" id="playerMsg"></div>
-        <div class="lap-touch-color"><i class="fa-solid fa-stopwatch fa-xl" data-type="time" style="color: #fff;"></i>
+      <!-- 登陆 -->
+      <div id="loginSection">
+        <div class="lap-login-section">
+          <div class="lap-login-mb10">账号：<input type="text" class="lap-login-input" id="loginUser"></div>
+          <div class="lap-login-mb10">密码：<input type="password" class="lap-login-input" id="loginPass"></div>
+          <div class="lap-login-btn1">
+            <button id="loginBtn">登陆</button>
+            <div class="lap-login-error" id="loginErr"></div>
+          </div>
         </div>
       </div>
-      <div class="lap-player">
-        <div class="lap-touch-color"><i class="fa-solid fa-backward-step fa-xl" data-type="pre"
-            style="color: #fff;"></i></div>
-        <audio class="lap-player-audio" controls id="audioPlayer"></audio>
-        <div class="lap-touch-color"><i class="fa-solid fa-forward-step fa-xl" data-type="next"
-            style="color: #fff;"></i></div>
+      <!-- 注册 -->
+      <div class="lap-dn" id="registerSection">
+        <div class="lap-login-section">
+          <div class="lap-login-mb10">
+            <div>注册账号：<input type="text" class="lap-login-input" id="regUser"></div>
+            <div class="lap-login-error lap-register-error" id="regUserErr"></div>
+          </div>
+          <div class="lap-login-mb10">
+            <div>注册密码：<input type="password" class="lap-login-input" id="regPass"></div>
+            <div class="lap-login-error lap-register-error" id="regPassErr"></div>
+          </div>
+          <div class="lap-login-btn2">
+            <button id="regBtn">注册并登陆</button>
+            <div class="lap-login-error" id="regErr"></div>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- 播放列表弹窗 -->
-    <div class="lap-popup lap-popup-list lap-dn" id="lapPopCurrent">
-      <div class="lap-popup-current">
-        <div class="lap-current-title" id="lapCurrentTitle">名称</div>
-        <div class="lap-current-author lap-author" id="lapCurrentAuthor">作者</div>
-        <div id="lapCurrentList"></div>
-        <div class="lap-current-close" id="lapCurrentClose">关闭</div>
+      <!-- 游客 -->
+      <div class="lap-dn" id="touristSection">
+        <div class="lap-login-section">
+          <div class="lap-login-mb10">账号：<input type="text" value="游客" class="lap-login-input" disabled></div>
+          <div class="lap-login-btn1"><button id="touristBtn">进入</button></div>
+        </div>
       </div>
-    </div>
-    <!-- 时间设定弹窗 -->
-    <div class="lap-popup lap-dn" id="lapPopTime">
-      <div class="lap-popup-time">
-        <div class="lap-time-title">定时设置</div>
-        <div class="lap-time-opt active" data-type="time" data-id="0">顺序播放</div>
-        <div class="lap-time-opt" data-type="time" data-id="1">播放当前</div>
-        <div class="lap-time-opt" data-type="time" data-id="2">播放两集</div>
-        <div class="lap-time-opt" data-type="time" data-id="3">播放三集</div>
-        <div class="lap-time-opt" data-type="time" data-id="4">播放四集</div>
-        <div class="lap-time-cancel" data-type="cancel">取消</div>
+      <div class="lap-spin lap-dn" id="lapSpin">
+        <div class="lap-flex-center" style="height: 100%;color: #fff;">
+          <i class="fa-solid fa-spinner fa-spin fa-2xl"></i>
+        </div>
       </div>
+      <div class="lap-info lap-dn" id="lapInfo"></div>
     </div>
-    <div class="lap-spin lap-dn" id="lapSpin">
-      <div class="lap-flex-center" style="height: 100%;color: #fff;">
-        <i class="fa-solid fa-spinner fa-spin fa-2xl"></i>
-      </div>
-    </div>
-    <div class="lap-info lap-dn" id="lapInfo"></div>
-  </div>
-  <script type="module">
-    import { init } from './js/index.js'
-    window.onload = () => {
-      init();
-    }
-  </script>
+    <script type="module">
+      import { init } from './js/login.js'
+      window.onload = () => {
+        init()
+      }
+    </script>
 </body>
 
 </html>

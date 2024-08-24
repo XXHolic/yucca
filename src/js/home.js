@@ -1,6 +1,6 @@
 import axios from "../asset/js/axios.min.js";
 import { api } from "./api.js";
-import { spin, addEventOnce, showTrigger } from "./util.js";
+import { spin, addEventOnce, showTrigger, storage, info } from "./util.js";
 import { audioEvent, getAudio, getCurrent, AudioPlayer, getCurrentPlay } from "./player.js";
 
 let originData = [] // 用来本地筛选
@@ -150,6 +150,17 @@ const eventInit = () => {
   setTimeout(() => {
     listEvent();
   }, 1000)
+
+  const lapUser = document.querySelector('#lapUser');
+  lapUser.addEventListener("click", () => {
+    if (window.confirm("确定要退出吗?")) {
+      storage.remove('name');
+      storage.remove('password');
+      storage.remove('userId');
+      window.location.href = './index.html';
+    }
+  });
+
 };
 
 const getAuthors = async () => {
@@ -171,6 +182,16 @@ const getPrograms = async () => {
 };
 
 const init = () => {
+  // 全局设置请求
+  const userId = storage.get('userId');
+  const name = storage.get('name');
+  if (!userId) {
+    info.show("用户登陆信息无效");
+    return false;
+  }
+  const lapUser = document.querySelector('#lapUser');
+  lapUser.innerHTML = name;
+  axios.defaults.headers.common['Authorization'] = userId;
   getPrograms();
   getAuthors();
   audioEvent();

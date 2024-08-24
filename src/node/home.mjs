@@ -31,11 +31,17 @@ const getProgramDetail = (req, res) => {
 }
 
 const addCurrent = (req, res) => {
+  const headers = req.headers;
+  const userId = headers['authorization'];
+  if (!userId) {
+    backErrMsg(res, '用户信息无效');
+    return;
+  }
   dealPost(req, async (params) => {
     const { id } = params
     const detailPath = `${preFold}/json/${id}.json`
     const contents = await readFile(detailPath, { encoding: "utf-8" });
-    const writePath = `${preFold}/json/current.json`
+    const writePath = `${preFold}/json/user/current${userId}.json`
     writeFile(writePath, contents).then(() => {
       backOkMsg(res)
     })
@@ -43,15 +49,27 @@ const addCurrent = (req, res) => {
 }
 
 const getCurrent = async (req, res) => {
-  const currentPath = `${preFold}/json/current.json`
+  const headers = req.headers;
+  const userId = headers['authorization'];
+  if (!userId) {
+    backErrMsg(res, '用户信息无效');
+    return;
+  }
+  const currentPath = `${preFold}/json/user/current${userId}.json`
   const contents = await readFile(currentPath, { encoding: "utf-8" });
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(contents);
 }
 
 const saveCurrentPlay = (req, res) => {
+  const headers = req.headers;
+  const userId = headers['authorization'];
+  if (!userId) {
+    backErrMsg(res, '用户信息无效');
+    return;
+  }
   dealPost(req, (params) => {
-    const playPath = `${preFold}/json/current-play.json`
+    const playPath = `${preFold}/json/user/current${userId}-play.json`
     writeFile(playPath, JSON.stringify(params)).then(() => {
       backOkMsg(res)
     })
@@ -59,7 +77,13 @@ const saveCurrentPlay = (req, res) => {
 }
 
 const getCurrentPlay = async (req, res) => {
-  const playPath = `${preFold}/json/current-play.json`
+  const headers = req.headers;
+  const userId = headers['authorization'];
+  if (!userId) {
+    backErrMsg(res, '用户信息无效');
+    return;
+  }
+  const playPath = `${preFold}/json/user/current${userId}-play.json`
   const contents = await readFile(playPath, { encoding: "utf-8" });
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(contents);

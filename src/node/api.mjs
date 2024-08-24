@@ -7,6 +7,8 @@ const api = {
   currentAdd: "/api/current/add",
   currentPlaySave: "/api/current/save",
   currentPlayGet: "/api/current/get",
+  register: "/api/register",
+  login: "/api/login",
 };
 
 export { api };

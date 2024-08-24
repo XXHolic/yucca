@@ -1,4 +1,5 @@
 import { api } from "./api.mjs";
+import { userLogin, userRegister } from './user.mjs'
 import { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay } from './home.mjs'
 
 
@@ -6,6 +7,14 @@ const route = (req, res) => {
   console.log("About to route a request for " + req.url);
   const { url } = req;
   switch (url) {
+    case api.login: {
+      userLogin(req, res)
+      break;
+    }
+    case api.register: {
+      userRegister(req, res)
+      break;
+    }
     case api.program: {
       getPrograms(res)
       break;
