@@ -1,7 +1,7 @@
 // 格式化节目信息
 import { readFileSync, writeFileSync } from "node:fs";
 
-const fileName = 'original-read-06'
+const fileName = 'original-read-08'
 const getData = () => {
   const filePath = `../localdata/${fileName}/data.json`;
   const fileContent = readFileSync(filePath, { encoding: "utf-8" });
