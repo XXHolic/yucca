@@ -15,7 +15,7 @@ audio = mutagen.File(r"../localdata/再见深海.mp3")
 # 时间
 # audio.tags.add(TDRC(encoding=1, text=['2018-05-31']))
 # audio.save()
-# 这个可以答应出字段的原始编码
+# 这个可以打印出字段的原始编码
 print(audio.values())
 # print(audio.tags.pprint())
 # print(audio.pprint().split('\n'))

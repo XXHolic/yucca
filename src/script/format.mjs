@@ -3,11 +3,12 @@ import { join, extname } from "node:path";
 
 // 目前得到的数据分为了两个 json ，所以进行合并生成所需的格式
 
-const targetPath = "../localdata/original-read-08"; // 目标执行路径
+const targetPath = "../localdata/civics-lesson-01"; // 目标执行路径
 const listChapter = JSON.parse(readFileSync(`${targetPath}/chapter.json`));
 const listItem = JSON.parse(readFileSync(`${targetPath}/item.json`));
 const listItemAll = listItem.data.article_list
 const writeFilePath = `${targetPath}`;
+
 
 const catalog = listChapter.data.catalog.map((ele, index) => {
   const { catalog_title, catalog_id } = ele;
@@ -39,13 +40,14 @@ const catalogs = catalog.map((ele, index) => {
 })
 
 const formatList = {
-  title: "中国原著通读第八季《辉煌的唐诗》",
+  title: "",
   poster: "poster.jpg",
   author: listChapter.data.author,
-  path: "original-read-08",
-  date: "2023.09.14",
+  path: "civics-lesson-01",
+  date: "2024.31.31",
   catalogs
 }
+
 
 writeFile(`${writeFilePath}/data.json`, JSON.stringify(formatList), (err) => {
   if (err) {

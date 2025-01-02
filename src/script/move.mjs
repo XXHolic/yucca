@@ -1,4 +1,4 @@
-// 统一移动文件
+// 统一移动文件，目前不需要了。
 import { rename, readdirSync, statSync, existsSync } from "node:fs";
 import { join, extname, basename } from "node:path";
 import { createFold } from "./util.mjs";
