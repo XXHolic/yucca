@@ -9,6 +9,7 @@ const api = {
   currentPlayGet: "/api/current/get",
   register: "/api/register",
   login: "/api/login",
+  history: "/api/history",
 };
 
 export { api };

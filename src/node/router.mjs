@@ -1,6 +1,6 @@
 import { api } from "./api.mjs";
 import { userLogin, userRegister } from './user.mjs'
-import { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay } from './home.mjs'
+import { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay, getHistory } from './home.mjs'
 
 
 const route = (req, res) => {
@@ -41,6 +41,10 @@ const route = (req, res) => {
     }
     case api.currentPlayGet: {
       getCurrentPlay(req, res)
+      break;
+    }
+    case api.history: {
+      getHistory(req, res)
       break;
     }
     default: {

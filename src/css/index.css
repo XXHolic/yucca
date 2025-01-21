@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .lap-touch-color:active {
   opacity: 0.6;
 }
@@ -56,6 +57,12 @@
   padding-top: 54px;
 }
 
+.lap-history {
+  position: absolute;
+  right: 150px;
+  top: 10px;
+}
+
 .lmp-list-odd {
   background-color: #e4e4e4;
 }
@@ -84,7 +91,7 @@
   width: 70px;
   height: 70px;
   overflow: hidden;
-   flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .lap-author {
@@ -156,7 +163,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-    pointer-events: auto;
+  pointer-events: auto;
   background-color: #fff;
 }
 
@@ -164,6 +171,7 @@
   padding: 10px;
   text-align: center;
 }
+
 .lap-time-opt:active {
   background-color: #e4e4e4;
 }
@@ -213,6 +221,7 @@
 .lap-popup-current .lap-detail-row {
   margin-bottom: 0;
 }
+
 .lap-popup-current .lap-row-chapter {
   padding: 0 10px;
 }
@@ -240,4 +249,24 @@
   top: 10px;
   width: 126px;
   overflow: hidden;
+}
+
+.lap-history-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  line-height: 46px;
+  border-bottom: 1px solid #e4e4e4;
+  background-color: #fff;
+  text-align: center;
+}
+
+.lap-history-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  bottom: 0;
 }

@@ -10,7 +10,10 @@ const listObj = document.querySelector("#lapListBody");
 const allWriter = document.querySelector("#allWriter");
 const lapProgram = document.querySelector("#lapProgram");
 const lapProgramDetail = document.querySelector("#lapProgramDetail");
-const lapDetailList = document.querySelector("#lapDetailList");
+const lapDetailList = document.querySelector("#lapDetailList")
+const lapProgramHistory = document.querySelector("#lapProgramHistory")
+// 用来记录首页的点击进入详情的元素标记，这么做是因为首页滚动位置跟详情的滚动位置共享了，需要各自区分位置
+let clickId = '';
 
 const formatList = (data) => {
   const listStr = data.reduce((acc, cur, index) => {
@@ -30,7 +33,14 @@ const formatList = (data) => {
 const detailEvent = () => {
   const lapDetailBack = document.querySelector('#lapDetailBack')
   addEventOnce(lapDetailBack, "click", (e) => {
-    showTrigger.show(lapProgram, lapProgramDetail)
+    showTrigger.show(lapProgram, lapProgramDetail);
+    setTimeout(() => {
+      const selector = `.lap-list-row[data-id="${clickId}"]`;
+      const showTarget = listObj.querySelector(selector);
+      if (showTarget) {
+        showTarget.scrollIntoView({ block: "center" });
+      }
+    }, 500)
   })
 
   addEventOnce(lapDetailList, "click", (e) => {
@@ -91,7 +101,81 @@ const getDetail = async (params) => {
         return acc;
       }, '')
       lapDetailList.innerHTML = listStr;
+      setTimeout(() => {
+        lapDetailPoster.scrollIntoView();
+      }, 500);
       detailEvent()
+    }
+  } catch (error) {
+
+  } finally {
+    spin.hide()
+  }
+
+}
+
+const historyEvent = () => {
+  const lapHistoryBack = document.querySelector('#lapHistoryBack')
+  addEventOnce(lapHistoryBack, "click", (e) => {
+    showTrigger.show(lapProgram, lapProgramHistory);
+    setTimeout(() => {
+      const selector = `.lap-list-row[data-id="${clickId}"]`;
+      const showTarget = listObj.querySelector(selector);
+      if (showTarget) {
+        showTarget.scrollIntoView({ block: "center" });
+      }
+    }, 500)
+  })
+
+  const lapHistoryList = lapProgramHistory.querySelector("#lapHistoryList");
+  addEventOnce(lapHistoryList, "click", (e) => {
+    const target = e.target;
+    const type = target.getAttribute('data-type');
+    const sectionMark = target.getAttribute('data-mark');
+    const currentPlay = audioEle.getAttribute('data-mark');
+    if (type !== 'play') {
+      return;
+    }
+    const isSameProgram = currentPlay && currentPlay === sectionMark
+    if (!isSameProgram) {
+      const hasInstance = AudioPlayer.get(audioEle);
+      hasInstance && AudioPlayer.resetCount();
+      const arr = sectionMark.split('/');
+      const sectionId = arr[0];
+      getAudio({ id: sectionId, mark: sectionMark, title: target.innerText })
+    }
+  })
+}
+
+const getHistory = async () => {
+  spin.show()
+  try {
+    const { status, data } = await axios.get(api.history);
+    if (status == 200) {
+      const listStr = data.reduce((acc, cur) => {
+        const keys = Object.keys(cur);
+        const key = keys[0];
+        const values = cur[key];
+        let childStr = values.reduce((accChild, curChild) => {
+          const { mark, title } = curChild;
+          accChild += `<div class="lap-row-section" data-mark="${mark}" data-type="play">${title}</div>`;
+          return accChild
+        }, '')
+
+        acc += `<div class="lap-detail-row">
+            <div class="lap-row-chapter">${key}</div>
+            ${childStr}
+          </div>`;
+        return acc;
+      }, '')
+      const lapHistoryList = lapProgramHistory.querySelector("#lapHistoryList");
+      lapHistoryList.innerHTML = listStr;
+      historyEvent();
+      setTimeout(() => {
+        const ancor = lapProgramHistory.querySelector("#lapHistoryAncor");
+        ancor.scrollIntoView();
+      }, 500);
+
     }
   } catch (error) {
 
@@ -128,6 +212,7 @@ const listEvent = () => {
     const listenEle = newNodeList[i]
     const id = listenEle.getAttribute('data-id')
     addEventOnce(listenEle, "click", (e) => {
+      clickId = id;
       showTrigger.show(lapProgramDetail, lapProgram)
       getDetail({ id })
     })
@@ -159,6 +244,22 @@ const eventInit = () => {
       storage.remove('userId');
       window.location.href = './index.html';
     }
+  });
+
+  const lapHistory = document.querySelector('#lapHistory');
+  lapHistory.addEventListener("click", () => {
+    const newNodeList = lapListBody.querySelectorAll(".lap-list-row");
+    for (let i = 0; i < newNodeList.length; i++) {
+      const listenEle = newNodeList[i];
+      const { top } = listenEle.getBoundingClientRect();
+      if (top > 50) {
+        const id = listenEle.getAttribute('data-id');
+        clickId = id;
+        break;
+      }
+    }
+    showTrigger.show(lapProgramHistory, lapProgram);
+    getHistory();
   });
 
 };

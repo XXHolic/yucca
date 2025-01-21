@@ -28,6 +28,9 @@
               <option value="0">全部</option>
             </select>
           </label>
+          <div class="lap-history" id="lapHistory"><i class="fa-solid fa-clock-rotate-left fa-xl"
+              data-type="history"></i>
+          </div>
           <div class="lap-user">用户：<span id="lapUser">--</span></div>
         </div>
         <div id="lapListBody"></div>
@@ -44,6 +47,15 @@
         </div>
         <div class="lap-detail-list" id="lapDetailList"></div>
         <div class="lap-detail-back" id="lapDetailBack"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+      </div>
+      <!-- 节目收听历史 -->
+      <div class="lap-program-history lap-dn" id="lapProgramHistory">
+        <div class="lap-history-top">
+          <div class="lap-history-back" id="lapHistoryBack"><i class="fa-solid fa-chevron-left"></i></div>
+          <div>收听历史</div>
+        </div>
+        <div style="height: 45px;" id="lapHistoryAncor"></div>
+        <div id="lapHistoryList"></div>
       </div>
 
     </div>

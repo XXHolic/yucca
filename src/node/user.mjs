@@ -12,6 +12,7 @@ const userPath = `${preFold}/json/user/user.json`;
 
 const currentDemo = { id: "", title: "", author: "", poster: "", date: "", list: [] };
 const currentPlayDemo = {};
+const currentHistoryDemo = [];
 
 const userLogin = (req, res) => {
   dealPost(req, async (params) => {
@@ -56,8 +57,10 @@ const userRegister = (req, res) => {
     await writeFile(userPath, JSON.stringify(userList))
     const currentPath = `${preFold}/json/user/current${newUserId}.json`;
     const currentPlayPath = `${preFold}/json/user/current${newUserId}-play.json`;
+    const currentHistoryPath = `${preFold}/json/user/current${newUserId}-history.json`;
     await writeFile(currentPath, JSON.stringify(currentDemo));
     await writeFile(currentPlayPath, JSON.stringify(currentPlayDemo));
+    await writeFile(currentHistoryPath, JSON.stringify(currentHistoryDemo));
     backOkMsg(res, { code: 200, data: { userId: newUserId } })
   });
 }

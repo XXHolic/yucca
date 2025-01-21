@@ -69,10 +69,33 @@ const saveCurrentPlay = (req, res) => {
     return;
   }
   dealPost(req, (params) => {
-    const playPath = `${preFold}/json/user/current${userId}-play.json`
+    const playPath = `${preFold}/json/user/current${userId}-play.json`;
+    const historyPath = `${preFold}/json/user/current${userId}-history.json`;
     writeFile(playPath, JSON.stringify(params)).then(() => {
       backOkMsg(res)
-    })
+    });
+    // 添加到历史记录中,先要判断是否有相同日期，即使节目有重复也没关系，就是要记录
+    readFile(historyPath, { encoding: "utf-8" }).then((data) => {
+      const allData = JSON.parse(data);
+      if (allData.length > 100) {
+        allData.pop();
+      }
+      const currentTime = new Date();
+      const year = currentTime.getFullYear();
+      const month = currentTime.getMonth() + 1; // 月份从0开始，因此需要加1
+      const day = currentTime.getDate();
+      const dateStr = `${year}.${month}.${day}`;
+      const targetData = allData.find(ele => ele[dateStr]);
+      if (targetData) {
+        const targetArr = targetData[dateStr];
+        targetArr.unshift(params);
+      } else {
+        let recordData = {};
+        recordData[dateStr] = [params];
+        allData.unshift(recordData);
+      }
+      writeFile(historyPath, JSON.stringify(allData));
+    });
   });
 }
 
@@ -89,5 +112,18 @@ const getCurrentPlay = async (req, res) => {
   res.end(contents);
 }
 
+const getHistory = async (req, res) => {
+  const headers = req.headers;
+  const userId = headers['authorization'];
+  if (!userId) {
+    backErrMsg(res, '用户信息无效');
+    return;
+  }
+  const historyPath = `${preFold}/json/user/current${userId}-history.json`
+  const contents = await readFile(historyPath, { encoding: "utf-8" });
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(contents);
+}
 
-export { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay }
+
+export { getPrograms, getAuthors, getProgramDetail, addCurrent, getCurrent, saveCurrentPlay, getCurrentPlay, getHistory }
