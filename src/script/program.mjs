@@ -1,5 +1,5 @@
 import { readdirSync, statSync, existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join, extname } from "node:path";
+import { join, extname, basename } from "node:path";
 
 const fileArr = [];
 const dir = "../localdata";
@@ -20,7 +20,7 @@ const getFilePath = (dir) => {
     if (info.isDirectory() && !excludeDir.test(file)) {
       getFilePath(pathName);
     } else {
-      if ([".json"].includes(extname(file))) {
+      if ("data.json" === basename(file)) {
         fileArr.push(pathName);
       }
     }
@@ -28,7 +28,8 @@ const getFilePath = (dir) => {
 };
 
 const createFile = () => {
-  const arr = fileArr.map(ele => {
+  const validArr = fileArr.filter((ele) => !(ele && ele.title));
+  const arr = validArr.map(ele => {
     const fileContent = readFileSync(ele, { encoding: "utf-8" });
     const { title, poster, path, author, date } = JSON.parse(fileContent);
     return { id: path, title, author, poster, date }

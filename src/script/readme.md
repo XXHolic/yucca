@@ -6,6 +6,6 @@
 2. 确认字段无误后，执行 `node format.mjs`
 3. 接着为接口进行格式化，注意 getProgram.mjs 中 fileName 信息的同步，然后执行 `node getProgram.mjs` 。
 4. 接着生成所有节目集合信息，执行 `node program.mjs` 。
-5. 最后如何有新的作者，那么就要生产作者合集信息，执行  `node author.mjs` 。
+5. 最后如果有新的作者，那么就要生产作者合集信息，执行  `node author.mjs` 。
 
 
