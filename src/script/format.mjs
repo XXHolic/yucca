@@ -3,7 +3,7 @@ import { join, extname } from "node:path";
 
 // 目前得到的数据分为了两个 json ，所以进行合并生成所需的格式
 
-const targetPath = "../localdata/memory-of-memory-01"; // 目标执行路径
+const targetPath = "../localdata/restate-history-10"; // 目标执行路径
 const listChapter = JSON.parse(readFileSync(`${targetPath}/chapter.json`));
 const listItem = JSON.parse(readFileSync(`${targetPath}/item.json`));
 const listItemAll = listItem.data.article_list
@@ -40,11 +40,11 @@ const catalogs = catalog.map((ele, index) => {
 })
 
 const formatList = {
-  title: "离题而谈第一季", // 必填
+  title: "重述中国通史最终季《中国如何迎接变化：清朝》", // 必填
   poster: "poster.jpg", // 必填
   author: listChapter.data.author,
-  path: "memory-of-memory-01", // 必填
-  date: "2024.07.04", // 必填
+  path: "restate-history-10", // 必填
+  date: "2025.07.17", // 必填
   catalogs
 }
 
